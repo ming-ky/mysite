@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+
+	<!-- 쿼리문 작성 -->
+
+	<select id="selectAuthUser" parameterType="com.javaex.vo.UserVo"
+		resultType="com.javaex.vo.UserVo">
+		<![CDATA[
+		SELECT  no 
+				,name
+		FROM users
+		where id = #{id}
+		and password = #{password}
+		]]>
+	</select>
+
+	<insert id="insert" parameterType="com.javaex.vo.UserVo">  
+		 <![CDATA[
+	     INSERT INTO users
+	     VALUES (seq_users_no.nextval, 
+	             #{id},
+	             #{password},
+	             #{name},
+	             #{gender})
+		 ]]>
+	</insert>
+	
+	<select id="selectModifyUser" parameterType="com.javaex.vo.UserVo"
+		resultType="com.javaex.vo.UserVo">
+		<![CDATA[
+		SELECT  id 
+				,password
+				,name
+				,gender
+		FROM users
+		where no = #{no}
+		and name = #{name}
+		]]>
+	</select>
+
+	<update id="updateUser"  parameterType="com.javaex.vo.UserVo" > 
+		<![CDATA[
+			UPDATE users
+			set password = #{password}
+			   ,name = #{name}
+			   ,gender = #{gender}
+			where id = #{id}
+		]]>
+	</update>
+
+</mapper>

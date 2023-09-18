@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<select id="selectBoard" resultType="com.javaex.vo.BoardVo">
+		<![CDATA[
+			select  bo.no as no
+				    ,bo.title as title
+					,bo.content as content
+					,bo.hit as hit
+					,bo.reg_date as regDate
+					,us.name as name
+					,us.no as userNo
+			FROM board bo, users us
+			where bo.user_no = us.no
+			ORDER BY bo.no desc
+		]]>
+	</select>
+	
+
+	<insert id="insertBoard" parameterType="com.javaex.vo.BoardVo">  
+		 <![CDATA[
+	     INSERT INTO board 
+	     VALUES (seq_board_no.nextval
+	             ,#{title}
+	             ,#{content}
+	             , 0
+	             ,SYSDATE
+	             ,#{userNo} )
+		 ]]>
+	</insert>
+	
+	<select id="leadBoard" parameterType="int" resultType="com.javaex.vo.BoardVo">
+		<![CDATA[
+			select  BO.no as no
+				    ,BO.title as title
+					,BO.content as content
+					,BO.hit as hit
+					,BO.reg_date as regDate
+					,US.name as name
+					,US.no as userNo
+			FROM board BO, users US
+			where BO.user_no = US.no
+			and BO.no = #{int}
+		]]>
+	</select>
+	
+	<update id="hitUp" parameterType="int"> 
+		<![CDATA[
+			UPDATE board
+			set hit = hit+1
+			where no = #{int}
+		]]>
+	</update>
+	
+	<update id="updateBoard" parameterType="com.javaex.vo.BoardVo"> 
+		<![CDATA[
+			UPDATE board
+			set title = #{title}
+			    ,content = #{content}
+			where user_no = #{userNo}
+			and no = #{no}
+		]]>
+	</update>
+	
+	<delete id="deleteBoard" parameterType="com.javaex.vo.BoardVo">
+		<![CDATA[
+			DELETE from board
+			where user_no = #{userNo}
+			and no = #{no}		
+		]]>
+	</delete>
+	
+	<select id="searchBoard"  parameterType="String" resultType="com.javaex.vo.BoardVo">
+		<![CDATA[
+			select  bo.no as no
+				    ,bo.title as title
+					,bo.content as content
+					,bo.hit as hit
+					,bo.reg_date as regDate
+					,us.name as name
+					,us.no as userNo
+			FROM board bo, users us
+			where bo.user_no = us.no
+			and title like '%'||#{title}||'%'
+			ORDER BY bo.no desc
+		]]>
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+
+
+
+</mapper>
