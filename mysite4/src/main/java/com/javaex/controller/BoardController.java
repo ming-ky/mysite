@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javaex.dao.BoardDao;
-import com.javaex.service.BoardService;
 import com.javaex.vo.BoardVo;
 import com.javaex.vo.UserVo;
 
@@ -24,11 +23,11 @@ public class BoardController {
 	@Autowired
 	private BoardDao boardDao;
 	
-	
+	//리스트 (검색O, 페이징X)
 	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
 	public String addList(Model model) {
 		System.out.println("게시판 리스트");	
-		List<BoardVo> bList = boardDao.boardSelect();
+		List<BoardVo> bList = boardDao.boardSelectList();
 		model.addAttribute("bList", bList);
 		return "board/list";
 	}
@@ -92,5 +91,6 @@ public class BoardController {
 		model.addAttribute("bList", sList);
 		return "board/list";
 	}
+	
 
 }

@@ -14,13 +14,13 @@ public class BoardDao {
 	// 필드
 	@Autowired
 	private SqlSession sqlSession;
-	
+
 	// 생성자, 메소드 gs
 
 	// 메소드 일반
 
 	// (1) 게시판 리스트
-	public List<BoardVo> boardSelect() {
+	public List<BoardVo> boardSelectList() {
 		System.out.println("dao");
 		List<BoardVo> boardList = sqlSession.selectList("board.selectBoard");
 		return boardList;
@@ -56,6 +56,23 @@ public class BoardDao {
 		List<BoardVo> boardList = sqlSession.selectList("board.searchBoard", search);
 		return boardList;
 	}
-	
+
+	// 조회수 증가
+	public int updateHit(int no) {
+		System.out.println("BoardDao.updateHit()");
+
+		int count = sqlSession.update("board.updateHit", no);
+
+		return count;
+	}
+
+	// 글1개 가져오기
+	public BoardVo boardSelectOne(int no) {
+		System.out.println("BoardDao.boardSelectOne()");
+
+		BoardVo boardVo = sqlSession.selectOne("board.selectOne", no);
+
+		return boardVo;
+	}
 
 }
